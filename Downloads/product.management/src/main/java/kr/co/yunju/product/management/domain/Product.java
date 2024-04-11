@@ -1,4 +1,4 @@
-package kr.co.yunju.product.management;
+package kr.co.yunju.product.management.domain;
 
 public class Product {
     public Long getId() {
