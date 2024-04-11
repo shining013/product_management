@@ -1,6 +1,14 @@
 package kr.co.yunju.product.management.domain;
 
 public class Product {
+    private Long id;
+    private String name;
+    private Integer price;
+    private Integer amount;
+
+    public void setId(Long id) {
+        this.id = id;
+    }
     public Long getId() {
         return id;
     }
@@ -17,8 +25,5 @@ public class Product {
         return amount;
     }
 
-    private Long id;
-    private String name;
-    private Integer price;
-    private Integer amount;
+
 }
