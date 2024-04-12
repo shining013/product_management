@@ -10,4 +10,7 @@ public class Product {
         this.id = id;
     }
 
+    public Boolean sameId(Long id) {
+        return this.id.equals(id);
+    }
 }
