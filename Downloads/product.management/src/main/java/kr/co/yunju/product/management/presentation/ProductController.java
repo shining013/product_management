@@ -25,7 +25,10 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/products", method = RequestMethod.GET)
-    public List<ProductDto> findAllProduct() {
-        return simpleProductService.findAll();
+    public List<ProductDto> findProducts(@RequestParam(required = false) String name)
+    {
+        if(null == name)
+            return simpleProductService.findAll();
+        return simpleProductService.findByNameContaining(name);
     }
 }
