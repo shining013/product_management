@@ -25,4 +25,7 @@ public class ListProductRepository {
                 .findFirst()
                 .orElseThrow();
     }
+    public List<Product> findAll() {
+        return products;
+    }
 }
