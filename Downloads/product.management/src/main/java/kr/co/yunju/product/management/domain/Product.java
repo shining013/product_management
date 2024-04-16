@@ -2,10 +2,19 @@ package kr.co.yunju.product.management.domain;
 
 import java.util.Objects;
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Size;
+
 public class Product {
     private Long id;
+    @Size(min=1,  max=100)
     private String name;
+    @Max(1_000_000)
+    @Min(0)
     private Integer price;
+    @Max(9_999)
+    @Min(0)
     private Integer amount;
 
     public void setId(Long id) {
@@ -24,5 +33,8 @@ public class Product {
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
         return Objects.equals(id, product.id);
+    }
+    public String getName() {
+        return this.name;
     }
 }

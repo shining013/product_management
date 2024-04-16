@@ -21,6 +21,11 @@ public class SimpleProductService {
 
     public ProductDto add(ProductDto productDto) {
         Product product = modelMapper.map(productDto, Product.class);
+
+        if (product.getName().length() > 100 && product.getName().length() < 1) {
+            return null;
+        }
+
         Product savedProduct = listProductRepository.add(product);
         ProductDto savedProductDto = modelMapper.map(savedProduct, ProductDto.class);
         return savedProductDto;
