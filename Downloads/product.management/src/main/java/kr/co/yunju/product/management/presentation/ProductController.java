@@ -1,5 +1,6 @@
 package kr.co.yunju.product.management.presentation;
 
+import jakarta.validation.Valid;
 import kr.co.yunju.product.management.application.SimpleProductService;
 import kr.co.yunju.product.management.domain.Product;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ public class ProductController {
         this.simpleProductService = simpleProductService;
     }
     @RequestMapping(value="/products", method= RequestMethod.POST)
-    public ProductDto createProduct(@RequestBody ProductDto productDto) {
+    public ProductDto createProduct(@Valid @RequestBody ProductDto productDto) {
         return simpleProductService.add(productDto);
     }
 
