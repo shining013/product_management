@@ -2,8 +2,11 @@ package kr.co.yunju.product.management.presentation;
 
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.Path;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -18,12 +21,32 @@ public class GlobalExceptionHandler {
         List<String> errors = constraintViolations.stream()
                 .map(
                         constraintViolation ->
-                                constraintViolation.getPropertyPath()+", " +
+                                extractField(constraintViolation.getPropertyPath())+", " +
                                         constraintViolation.getMessage()
                 )
                 .toList();
         ErrorMessage errorMessage = new ErrorMessage(errors);
-        return new ResponseEntity(errorMessage, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
     }
+
+    public ResponseEntity<ErrorMessage> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
+        List<FieldError> fieldErrors = ex.getBindingResult().getFieldErrors();
+        List<String> errors = fieldErrors.stream()
+                .map(fieldError ->
+                        fieldError.getField() + ", " + fieldError.getDefaultMessage())
+                .toList();
+
+        ErrorMessage errorMessage = new ErrorMessage(errors);
+        return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
+    }
+
+    private String extractField(Path path) {
+        String[] splittedArray = path.toString().split("[.]");
+        int lastIndex = splittedArray.length - 1;
+        return splittedArray[lastIndex];
+    }
+
+
+
 
 }
