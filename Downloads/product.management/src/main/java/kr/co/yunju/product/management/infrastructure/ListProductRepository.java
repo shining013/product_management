@@ -1,9 +1,11 @@
 package kr.co.yunju.product.management.infrastructure;
 
 
+import kr.co.yunju.product.management.domain.EntityNotFoundException;
 import kr.co.yunju.product.management.domain.Product;
 import org.springframework.stereotype.Repository;
 
+import javax.swing.text.html.parser.Entity;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicLong;
@@ -23,7 +25,7 @@ public class ListProductRepository {
         return products.stream()
                 .filter(product -> product.sameId(id))
                 .findFirst()
-                .orElseThrow();
+                .orElseThrow(() -> new EntityNotFoundException("Product를 찾지 못했습니다."));
     }
     public List<Product> findAll() {
         return products;
