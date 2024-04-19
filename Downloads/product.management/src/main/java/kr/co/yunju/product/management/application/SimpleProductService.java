@@ -1,6 +1,7 @@
 package kr.co.yunju.product.management.application;
 
 import kr.co.yunju.product.management.domain.Product;
+import kr.co.yunju.product.management.infrastructure.DatabaseProductRepository;
 import kr.co.yunju.product.management.infrastructure.ListProductRepository;
 import kr.co.yunju.product.management.presentation.ProductDto;
 import org.modelmapper.ModelMapper;
@@ -11,12 +12,12 @@ import java.util.List;
 
 @Service
 public class SimpleProductService {
-    private ListProductRepository listProductRepository;
+    private DatabaseProductRepository databaseProductRepository;
     private ModelMapper modelMapper;
     private ValidationService validationService;
     @Autowired
-    SimpleProductService(ListProductRepository listProductRepository, ModelMapper modelMapper, ValidationService validationService) {
-        this.listProductRepository = listProductRepository;
+    SimpleProductService(DatabaseProductRepository databaseProductRepository, ModelMapper modelMapper, ValidationService validationService) {
+        this.databaseProductRepository = databaseProductRepository;
         this.modelMapper = modelMapper;
         this.validationService = validationService;
     }
@@ -24,23 +25,20 @@ public class SimpleProductService {
     public ProductDto add(ProductDto productDto) {
         Product product = modelMapper.map(productDto, Product.class);
         validationService.checkValid(product);
-        if (product.getName().length() > 100 && product.getName().length() < 1) {
-            return null;
-        }
 
-        Product savedProduct = listProductRepository.add(product);
+        Product savedProduct = databaseProductRepository.add(product);
         ProductDto savedProductDto = modelMapper.map(savedProduct, ProductDto.class);
         return savedProductDto;
     }
 
     public ProductDto findById(Long id) {
-        Product product = listProductRepository.findById(id);
+        Product product = databaseProductRepository.findById(id);
         ProductDto productDto = modelMapper.map(product, ProductDto.class);
         return productDto;
     }
 
     public List<ProductDto> findAll() {
-        List<Product> products = listProductRepository.findAll();
+        List<Product> products = databaseProductRepository.findAll();
         List<ProductDto> productDtos = products.stream()
                 .map(product -> modelMapper.map(product, ProductDto.class))
                 .toList();
@@ -48,7 +46,7 @@ public class SimpleProductService {
     }
 
     public List<ProductDto> findByNameContaining(String name) {
-        List<Product> products = listProductRepository.findByNameContaining(name);
+        List<Product> products = databaseProductRepository.findByNameContaining(name);
         List<ProductDto> productDtos = products.stream()
                 .map(product -> modelMapper.map(product, ProductDto.class))
                 .toList();
@@ -57,12 +55,12 @@ public class SimpleProductService {
 
     public ProductDto update(ProductDto productDto) {
         Product product = modelMapper.map(productDto, Product.class);
-        Product updateProduct = listProductRepository.update(product);
+        Product updateProduct = databaseProductRepository.update(product);
         ProductDto updatedProductDto = modelMapper.map(updateProduct, ProductDto.class);
         return updatedProductDto;
     }
 
     public void delete(Long id) {
-        listProductRepository.delete(id);
+        databaseProductRepository.delete(id);
     }
 }
