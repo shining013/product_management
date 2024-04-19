@@ -2,6 +2,11 @@ package kr.co.yunju.product.management.infrastructure;
 
 import kr.co.yunju.product.management.domain.Product;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collections;
@@ -9,15 +14,17 @@ import java.util.List;
 
 @Repository
 public class DatabaseProductRepository {
-    private JdbcTemplate jdbcTemplate;
-    public DatabaseProductRepository(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
+    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    public DatabaseProductRepository(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
     public Product add(Product product) {
-        jdbcTemplate
-                .update("INSERT INTO products (name, price, amount) VALUES (?, ?, ?)",
-                        product.getName(),product.getPrice(),product.getAmount());
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        SqlParameterSource namedParameter = new BeanPropertySqlParameterSource(product);
+        namedParameterJdbcTemplate.update("INSERT INTO products (name, price, amount) VALUES (:name, :price, :amount)", namedParameter, keyHolder);
 
+        Long generatedId = keyHolder.getKey().longValue();
+        product.setId(generatedId);
         return product;
     }
     public Product findById(Long id) {
