@@ -40,4 +40,11 @@ public class Product {
     public String getName() {
         return this.name;
     }
+    public Integer getPrice() {
+        return price;
+    }
+
+    public Integer getAmount() {
+        return amount;
+    }
 }
