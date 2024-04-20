@@ -1,8 +1,10 @@
 package kr.co.yunju.product.management.infrastructure;
 
 import kr.co.yunju.product.management.domain.Product;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -28,7 +30,14 @@ public class DatabaseProductRepository {
         return product;
     }
     public Product findById(Long id) {
-        return null;
+        SqlParameterSource namedParameter = new MapSqlParameterSource("id", id);
+
+        Product product = namedParameterJdbcTemplate.queryForObject(
+                "SELECT id, name, price, amount FROM products WHERE id=:id",
+                namedParameter,
+                new BeanPropertyRowMapper<>(Product.class)
+        );
+        return product;
     }
 
     public List<Product> findAll() {
