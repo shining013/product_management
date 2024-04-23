@@ -1,6 +1,7 @@
 package kr.co.yunju.product.management.infrastructure;
 
 import kr.co.yunju.product.management.domain.Product;
+import kr.co.yunju.product.management.domain.ProductRepository;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -15,7 +16,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Repository
-public class DatabaseProductRepository {
+public class DatabaseProductRepository implements ProductRepository {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     public DatabaseProductRepository(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
