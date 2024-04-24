@@ -3,6 +3,7 @@ package kr.co.yunju.product.management.infrastructure;
 
 import kr.co.yunju.product.management.domain.EntityNotFoundException;
 import kr.co.yunju.product.management.domain.Product;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 import kr.co.yunju.product.management.domain.ProductRepository;
 import javax.swing.text.html.parser.Entity;
@@ -11,6 +12,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Repository
+@Profile("test")
 public class ListProductRepository implements ProductRepository {
     private List<Product> products = new CopyOnWriteArrayList<>();
     private AtomicLong sequence = new AtomicLong(1L);
