@@ -1,8 +1,9 @@
 package kr.co.yunju.product.management.application;
 
-import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
+
+import jakarta.validation.Valid;
 
 @Service
 @Validated

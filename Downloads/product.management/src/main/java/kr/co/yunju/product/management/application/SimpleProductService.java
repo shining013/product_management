@@ -1,7 +1,6 @@
 package kr.co.yunju.product.management.application;
 
 import kr.co.yunju.product.management.domain.Product;
-import kr.co.yunju.product.management.infrastructure.DatabaseProductRepository;
 import kr.co.yunju.product.management.domain.ProductRepository;
 import kr.co.yunju.product.management.presentation.ProductDto;
 import org.modelmapper.ModelMapper;

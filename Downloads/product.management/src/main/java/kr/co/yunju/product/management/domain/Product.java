@@ -9,7 +9,8 @@ import jakarta.validation.constraints.Size;
 
 public class Product {
     private Long id;
-    @Size(min=1,  max=100)
+
+    @Size(min=1, max=100)
     private String name;
 
     @Max(1_000_000)
@@ -23,6 +24,15 @@ public class Product {
     public Long getId() {
         return id;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public Integer getPrice() {
+        return price;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -46,20 +56,14 @@ public class Product {
     public Boolean containsName(String name) {
         return this.name.contains(name);
     }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || getClass() != o.getClass())
+            return false;
         Product product = (Product) o;
         return Objects.equals(id, product.id);
     }
-    public String getName() {
-        return this.name;
-    }
-    public Integer getPrice() {
-        return price;
-    }
 
-    public Integer getAmount() {
-        return amount;
-    }
 }

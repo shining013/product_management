@@ -1,16 +1,16 @@
 package kr.co.yunju.product.management.presentation;
 
-import jakarta.validation.Valid;
 import kr.co.yunju.product.management.application.SimpleProductService;
-import kr.co.yunju.product.management.domain.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import jakarta.validation.Valid;
 import java.util.List;
 
 @RestController
 public class ProductController {
     private SimpleProductService simpleProductService;
+
     @Autowired
     ProductController(SimpleProductService simpleProductService) {
         this.simpleProductService = simpleProductService;
