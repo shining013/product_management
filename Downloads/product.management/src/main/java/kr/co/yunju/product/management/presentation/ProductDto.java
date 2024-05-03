@@ -58,11 +58,11 @@ public class ProductDto {
 
     public static ProductDto toDto(Product product) {
         ProductDto productDto = new ProductDto(
-            product.getName(),
+                product.getId(),
+                product.getName(),
                 product.getPrice(),
                 product.getAmount()
         );
-        productDto.setId(product.getId());
         return productDto;
     }
 }
