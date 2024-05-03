@@ -25,6 +25,10 @@ public class Product {
         return id;
     }
 
+    public Integer getAmount() {
+        return amount;
+    }
+
     public String getName() {
         return name;
     }

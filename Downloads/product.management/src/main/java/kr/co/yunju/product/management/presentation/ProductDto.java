@@ -1,6 +1,7 @@
 package kr.co.yunju.product.management.presentation;
 
 import jakarta.validation.constraints.NotNull;
+import kr.co.yunju.product.management.domain.Product;
 
 public class ProductDto {
     private Long id;
@@ -10,6 +11,21 @@ public class ProductDto {
     private Integer price;
     @NotNull
     private Integer amount;
+    public ProductDto() {
+
+    }
+    public ProductDto(String name, Integer price, Integer amount) {
+        this.name = name;
+        this.price = price;
+        this.amount = amount;
+    }
+
+    public ProductDto(Long id, String name, Integer price, Integer amount) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.amount = amount;
+    }
     public Long getId() {
         return id;
     }
@@ -29,4 +45,24 @@ public class ProductDto {
         this.id = id;
     }
 
+    public static Product toEntity(ProductDto productDto) {
+        Product product = new Product();
+
+        product.setId(productDto.getId());
+        product.setName(productDto.getName());
+        product.setPrice(productDto.getPrice());
+        product.setAmount(productDto.getAmount());
+
+        return product;
+    }
+
+    public static ProductDto toDto(Product product) {
+        ProductDto productDto = new ProductDto(
+            product.getName(),
+                product.getPrice(),
+                product.getAmount()
+        );
+        productDto.setId(product.getId());
+        return productDto;
+    }
 }
